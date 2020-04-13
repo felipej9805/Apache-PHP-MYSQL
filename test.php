@@ -1,55 +1,64 @@
 <?php
-//Variables para la conexion con la base de datos
-$host = "localhost";
-$user = "root"; // Usuario de la base de datos
-$pass = "password"; // Contraseña de la base de datos
-$db = "prueba"; // Nombre de la base de datos 
+    //Variables para la conexion con la base de datos
+    $host = "localhost"; // Host de la base de datos
+    $user = "root"; // Usuario de la base de datos
+    $pass = "password"; // Contraseña de la base de datos
+    $db = "prueba"; // Nombre de la base de datos 
+
+    //Crea la conexion con el SERVIDOR DE LA BASE DE DATOS
+    $conexion = mysqli_connect($host, $user, $pass);
+
+    //En el caso que la conexion no se logre, muestra el mensaje de error
+    if (!$conexion) {
+        echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+        echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
+        exit;
+    }
+
+    //En el caso que sea exitoso, muestra el siguientre mensaje
+    echo "Éxito: Se realizó una conexión apropiada a MySQL!" . PHP_EOL;
+    echo "<br>";
+
+    //Crea la conexion a LA BASE DE DATOS que estamos trabajando, en caso que no sea exitoso, nos mostrara un mensaje
+    $basededatos = mysqli_select_db( $conexion, $db ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
+
+    //Si se logra con exito, nos muestra el siguiente mensaje
+    echo "Se conecto a la base de datos llamada: $db !!!!". PHP_EOL;
+    echo "<br>";
+ 
+    //Obtener los datos desde la url del navegador
+    //http://localhost/test.php?id=30&nombre=maria 
+    $id = $_GET["id"];
+    $nombre = $_GET["nombre"];
+
+    //Sentencia SQL para insertar los datos a la base de datos 
+    $sql = "INSERT INTO mitabla (id, nombre) VALUES ('$id', '$nombre')";    
+ 
+        //Si la ejecuciòn de la sentencia es exitosa
+    if (mysqli_query($conexion, $sql)) {
+        echo "New record created successfully";
+    } else {
+    //    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+    //Sentencia SQL para obtener todos los datos de la base de datos
+    $consulta = "SELECT * FROM mitabla";
+    $resultado = mysqli_query($conexion, $consulta) or die ( "Algo ha ido mal en la consulta");;
 
 
-$enlace = mysqli_connect($host, $user, $pass);
+    echo "<table borde='2'>";
+    echo "<tr>";
+    echo "<th>id</th>";
+    echo "<th>nombre</th>";
+    echo "</tr>";
 
-if (!$enlace) {
-    echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
-    echo "error de depuración: " . mysqli_connect_error() . PHP_EOL;
-    exit;
-}
+    while ($columna = mysqli_fetch_array( $resultado ))
+    {
+    echo "<tr>";
+    echo "<td>" . $columna['id'] . "</td><td>" . $columna['nombre'] . "</td>";
+    echo "</tr>";
+    }
+    echo "</table>";
 
-echo "Éxito: Se realizó una conexión apropiada a MySQL!" . PHP_EOL;
-echo "<br>";
-
-$basededatos = mysqli_select_db( $enlace, $db ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
-echo "Se conecto a la base de datos llamada: $db !!!!". PHP_EOL;
-echo "<br>";
-
-
-//$sql = "INSERT INTO mitabla (id, nombre) VALUES ('20', 'Juan')";  
-$id = $_GET["id"];
-$nombre = $_GET["nombre"];
-$sql = "INSERT INTO mitabla (id, nombre) VALUES ('$id', '$nombre')";    
- if (mysqli_query($enlace, $sql)) {
-    echo "New record created successfully";
- } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
- }
-
-
- $consulta = "SELECT * FROM mitabla";
- $resultado = mysqli_query($enlace, $consulta) or die ( "Algo ha ido mal en la consulta");;
-
-
-echo "<table borde='2'>";
-echo "<tr>";
-echo "<th>id</th>";
-echo "<th>nombre</th>";
-echo "</tr>";
-
-while ($columna = mysqli_fetch_array( $resultado ))
-{
- echo "<tr>";
- echo "<td>" . $columna['id'] . "</td><td>" . $columna['nombre'] . "</td>";
- echo "</tr>";
-}
-echo "</table>";
-
-mysqli_close($enlace);
+    mysqli_close($enlace);
 ?>
