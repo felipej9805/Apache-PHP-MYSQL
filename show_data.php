@@ -37,7 +37,7 @@ $consulta = "SELECT * FROM info";
 $resultado = mysqli_query($conn, $consulta) or die ( "Algo ha ido mal en la consulta");;
 
 //Mostrar los datos en el navegador
-echo "<table borde='2' >";
+echo "<table width='100%' border='2px solid black' border-collapse: collapse >";
 echo "<tr>";
 echo "<th>idpacket</th>";
 echo "<th>fecha</th>";
