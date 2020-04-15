@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html><body>
 <?php
+/*
+  Rui Santos
+  Complete project details at https://RandomNerdTutorials.com/esp32-esp8266-mysql-database-php/
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files.
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+*/
 
-// REPLACE with your server name
 $host = "localhost";
+
 // REPLACE with your Database name
-$db = "bd";
+$db = "prueba";
 // REPLACE with Database user
 $user = "root";
 // REPLACE with Database user password
@@ -33,32 +43,23 @@ echo "Se conecto a la base de datos llamada: $db !!!!". PHP_EOL;
 echo "<br>"; 
 
 //Sentencia SQL para obtener todos los datos de la base de datos
-$consulta = "SELECT * FROM info";
+$consulta = "SELECT * FROM mitabla";
 $resultado = mysqli_query($conn, $consulta) or die ( "Algo ha ido mal en la consulta");;
+
 
 //Mostrar los datos en el navegador
 echo "<table borde='2' >";
 echo "<tr>";
-echo "<th>idpacket</th>";
-echo "<th>fecha</th>";
-echo "<th>tiempo</th>";
-echo "<th>latitud</th>";
-echo "<th>longitud</th>";
-echo "<th>velocidad</th>";
-echo "<th>altitud</th>";
+echo "<th>id</th>";
+echo "<th>nombre</th>";
 echo "</tr>";
 
 while ($columna = mysqli_fetch_array( $resultado ))
 {
-    echo "<tr>";
-    echo "<td>" . $columna['idpacket'] . "</td>";
-    echo "<td>" . $columna['fecha'] . "</td>";
-    echo "<td>" . $columna['tiempo'] . "</td>";
-    echo "<td>" . $columna['latitud'] . "</td>";
-    echo "<td>" . $columna['longitud'] . "</td>";
-    echo "<td>" . $columna['velocidad'] . "</td>";
-    echo "<td>" . $columna['altitud'] . "</td>";
-    echo "</tr>";
+echo "<tr>";
+echo "<td>" . $columna['id'] . "</td>";
+echo "<td>" . $columna['nombre'] . "</td>";
+echo "</tr>";
 }
 echo "</table>";
 

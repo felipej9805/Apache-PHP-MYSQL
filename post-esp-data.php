@@ -3,7 +3,7 @@
     $host = "localhost"; // Host de la base de datos
     $user = "root"; // Usuario de la base de datos
     $pass = "password"; // Contraseña de la base de datos
-    $db = "bd"; // Nombre de la base de datos 
+    $db = "prueba"; // Nombre de la base de datos 
 
     //Crea la conexion con el SERVIDOR DE LA BASE DE DATOS
     $conexion = mysqli_connect($host, $user, $pass);
@@ -28,22 +28,17 @@
  
     //Obtener los datos desde la url del navegador
     //http://localhost/test.php?id=30&nombre=maria 
-    $idPacket = $_GET["idPacket"];
-    $fecha = $_GET["fecha"];
-    $tiempo = $_GET["tiempo"];
-    $latitud = $_GET["latitud"];
-    $longitud = $_GET["longitud"];
-    $velocidad = $_GET["velocidad"];
-    $altitud = $_GET["altitud"];
+    $id = $_GET["id"];
+    $nombre = $_GET["nombre"];
 
     //Sentencia SQL para insertar los datos a la base de datos 
-    $sql = "INSERT INTO info (idpacket, fecha, tiempo, latitud, longitud, velocidad, altitud) VALUES ('$idPacket', '$fecha', '$tiempo', '$latitud', '$longitud', '$velocidad', '$altitud')";    
+    $sql = "INSERT INTO mitabla (id, nombre) VALUES ('$id', '$nombre')";    
  
         //Si la ejecuciòn de la sentencia es exitosa
     if (mysqli_query($conexion, $sql)) {
-        echo "New record with id : $idPacket was created successfully";
+        echo "New record with id : $id was created successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    //    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 
     mysqli_close($conexion);
